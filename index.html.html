@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PS4 Saves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-2: #101827;
+    --line: #1f2a3d;
+    --text: #e7ecf3;
+    --text-dim: #8792a3;
+    --blue: #2d9cff;
+    --blue-dim: #164a7a;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: radial-gradient(ellipse 900px 500px at 50% -10%, #142338 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100%;
+  }
+
+  header {
+    padding: 48px 20px 28px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  header h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    letter-spacing: 0.5px;
+    margin: 0;
+    color: var(--text);
+  }
+  header h1 span { color: var(--blue); }
+  header p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin: 10px 0 0;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 16px 64px;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+  }
+  .search-bar svg { flex-shrink: 0; color: var(--text-dim); }
+  .search-bar input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+  }
+  .search-bar input::placeholder { color: var(--text-dim); }
+
+  .count {
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    margin: 0 0 14px 2px;
+  }
+
+  .list { display: flex; flex-direction: column; gap: 10px; }
+
+  .game {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .game:hover { border-color: var(--blue-dim); background: #131e30; }
+
+  .game-info { min-width: 0; }
+  .game-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    margin: 0 0 4px;
+    color: var(--text);
+    overflow-wrap: break-word;
+  }
+  .game-meta {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .cusa {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-dim);
+    color: #cfe6ff;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 9px 16px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--blue); color: #051425; }
+
+  .empty {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 60px 20px;
+    font-size: 0.95rem;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    padding: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 480px) {
+    .game { flex-direction: column; align-items: flex-start; }
+    .btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>PS4 <span>SAVES</span></h1>
+  <p>Partidas guardadas subidas por la comunidad. Cada save enlaza a su archivo en Telegram.</p>
+</header>
+
+<main>
+  <div class="search-bar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="search" placeholder="Buscar por nombre o CUSA…" autocomplete="off">
+  </div>
+  <p class="count" id="count"></p>
+  <div class="list" id="list"></div>
+</main>
+
+<footer>
+  Los saves son subidos y compartidos por usuarios. Úsalos bajo tu propio criterio.
+</footer>
+
+<script>
+  /* =========================================================
+     EDITA AQUÍ — agrega, quita o modifica juegos en esta lista.
+     Copia un bloque { ... } y cambia los datos.
+
+     title : nombre del juego
+     cusa  : código CUSA del juego (opcional, pon "" si no aplica)
+     note  : detalle corto (ej: "100% desbloqueado", "Post-final")
+     link  : el link directo al mensaje de Telegram con el archivo
+     ========================================================= */
+  const GAMES = [
+    {
+      title: "Captain Tsubasa: Rise of New Champions",
+      cusa: "CUSA-14896",
+      note: "Partida avanzada",
+      link: "https://t.me/TU_CANAL/1"
+    },
+    {
+      title: "FIFA 27",
+      cusa: "CUSA-19730",
+      note: "100% desbloqueado",
+      link: "https://t.me/TU_CANAL/2"
+    },
+    {
+      title: "God of War",
+      cusa: "CUSA-03041",
+      note: "New Game+ completado",
+      link: "https://t.me/TU_CANAL/3"
+    },
+    {
+      title: "Gran Turismo Sport",
+      cusa: "CUSA-08966",
+      note: "Todos los autos desbloqueados",
+      link: "https://t.me/TU_CANAL/4"
+    },
+    // { title: "Otro juego", cusa: "CUSA-XXXXX", note: "100% desbloqueado", link: "https://t.me/TU_CANAL/5" },
+  ];
+  /* ========================================================= */
+
+  const list = document.getElementById('list');
+  const count = document.getElementById('count');
+  const search = document.getElementById('search');
+
+  function render(games) {
+    if (games.length === 0) {
+      list.innerHTML = '<div class="empty">No se encontró ningún juego con esa búsqueda.</div>';
+    } else {
+      list.innerHTML = games.map(g => `
+        <div class="game">
+          <div class="game-info">
+            <p class="game-title">${g.title}</p>
+            <div class="game-meta">
+              ${g.cusa ? `<span class="cusa">${g.cusa}</span>` : ''}
+              ${g.note ? `<span>${g.note}</span>` : ''}
+            </div>
+          </div>
+          <a class="btn" href="${g.link}" target="_blank" rel="noopener">Ver en Telegram</a>
+        </div>
+      `).join('');
+    }
+    count.textContent = `${games.length} juego${games.length === 1 ? '' : 's'}`;
+  }
+
+  function filter() {
+    const q = search.value.trim().toLowerCase();
+    if (!q) { render(GAMES); return; }
+    render(GAMES.filter(g =>
+      g.title.toLowerCase().includes(q) ||
+      (g.cusa && g.cusa.toLowerCase().includes(q))
+    ));
+  }
+
+  search.addEventListener('input', filter);
+  render(GAMES);
+</script>
+
+</body>
+</html>
