@@ -16,6 +16,7 @@
     --text-dim: #8792a3;
     --blue: #2d9cff;
     --blue-dim: #164a7a;
+    --red: #ff3b3b;
     box-sizing: border-box;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -32,26 +33,64 @@
   }
 
   header {
-    padding: 48px 20px 28px;
+    padding: 40px 20px 28px;
     text-align: center;
     border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    flex-shrink: 0;
   }
   header h1 {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
-    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-size: clamp(1.8rem, 5.5vw, 2.9rem);
     letter-spacing: 0.5px;
     margin: 0;
     color: var(--text);
+    text-align: left;
   }
-  header h1 span { color: var(--blue); }
+  header h1 .blue { color: var(--blue); }
+  header h1 .brandname { color: var(--red); }
   header p {
     color: var(--text-dim);
     font-size: 0.95rem;
-    margin: 10px 0 0;
+    margin: 14px 0 0;
     max-width: 520px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .telegram-tab {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    background: var(--blue);
+    color: #051425;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    padding: 18px 10px;
+    border-radius: 8px 0 0 8px;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    z-index: 10;
+    transition: padding 0.15s ease, background 0.15s ease;
+  }
+  .telegram-tab:hover { padding-right: 14px; background: #52b2ff; }
+
+  @media (max-width: 480px) {
+    .telegram-tab { font-size: 0.82rem; padding: 14px 8px; }
   }
 
   main {
@@ -167,8 +206,14 @@
 </head>
 <body>
 
+<a class="telegram-tab" href="https://t.me/TU_GRUPO_AQUI" target="_blank" rel="noopener">Únete al grupo de Telegram</a>
+
 <header>
-  <h1>PS4 <span>SAVES</span></h1>
+  <div class="brand">
+    <!-- Reemplaza esta imagen por tu logo: sube tu archivo (ej. logo.png) al mismo repositorio y cambia el "src" de abajo por "logo.png" -->
+    <img class="logo" src="https://placehold.co/52x52/101827/2d9cff?text=P9" alt="Logo">
+    <h1><span class="blue">PS4 SAVES</span> <span class="brandname">POKEGENIUS9</span></h1>
+  </div>
   <p>Partidas guardadas subidas por la comunidad. Cada save enlaza a su archivo en Telegram.</p>
 </header>
 
